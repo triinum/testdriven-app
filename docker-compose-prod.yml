@@ -1,16 +1,25 @@
 version: '3.4'
 
 services:
+  nginx:
+    container_name: nginx
+    build: ./services/nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - users
+
   users:
     container_name: users
     build:
       context: ./services/users
-      dockerfile: Dockerfile-dev
-    ports:
-      - 5001:5000
+      dockerfile: Dockerfile-prod
+    expose:
+      - 5000
     environment:
-      - APP_SETTINGS=project.config.DevelopmentConfig
-      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+      - APP_SETTINGS=project.config.ProductionConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
     depends_on:
       - users-db
