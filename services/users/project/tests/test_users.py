@@ -7,11 +7,13 @@ from project.tests.base import BaseTestCase
 from project import db
 from project.api.models import User
 
+
 def add_user(username, email):
     user = User(username=username, email=email)
     db.session.add(user)
     db.session.commit()
     return user
+
 
 class TestUserService(BaseTestCase):
     """Tests for the Users Service"""
@@ -23,9 +25,10 @@ class TestUserService(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'<h1>All Users</h1>', response.data)
         self.assertIn(b'<p>No users!</p>', response.data)
-    
+
     def test_main_with_users(self):
-        """Ensure the main route behaves correctly when some users have been added"""
+        """Ensure the main route behaves correctly when some users
+           have been added"""
         add_user('ride', 'sride@nasa.gov')
         add_user('glenn', 'jglenn@nasa.gov')
         with self.client:
@@ -49,13 +52,11 @@ class TestUserService(BaseTestCase):
             self.assertNotIn(b'<p>No users!</p>', response.data)
             self.assertIn(b'shepard', response.data)
 
-
-
     def test_users(self):
         """Ensure the /ping bahaves correctly"""
         response = self.client.get('/users/ping')
         data = json.loads(response.data.decode())
-        
+
         self.assertEqual(response.status_code, 200)
         self.assertIn('pong', data['message'])
         self.assertIn('success', data['status'])
@@ -95,7 +96,7 @@ class TestUserService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/users',
-                data=json.dumps({ 'email': 'baldrin@nasa.gov' }),
+                data=json.dumps({'email': 'baldrin@nasa.gov'}),
                 content_type='application/json'
             )
             data = json.loads(response.data.decode())
