@@ -17,7 +17,7 @@ before_script:
 
 script:
   - docker-compose run users python manage.py test
-  - docker-compose run users python flake8 project
+  - docker-compose run users flake8 project
 
 after_script:
   - docker-compose down
