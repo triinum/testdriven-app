@@ -7,6 +7,8 @@ services:
     restart: always
     ports:
       - 80:80
+    volumes:
+      - ./services/users/htmlcov:/var/www/htmlcov
     depends_on:
       - users
 
