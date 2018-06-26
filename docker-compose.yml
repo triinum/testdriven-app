@@ -3,13 +3,35 @@ version: '3.4'
 services:
   nginx:
     container_name: nginx
-    build: ./services/nginx
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-dev
     restart: always
     ports:
       - 80:80
     volumes:
-      - ./services/users/htmlcov:/var/www/htmlcov
+      - ./services/users/htmlcov:/var/www/coverage/users
+      - ./services/client/coverage/lcov-report:/var/www/coverage/client
     depends_on:
+      - users
+      - client
+
+  client:
+    container_name: client
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3007:3000'
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+    depends_on:
+      - users
+    links:
       - users
 
   users:
@@ -30,7 +52,7 @@ services:
       - users-db
     links:
       - users-db
-  
+
   users-db:
     container_name: users-db
     build:
