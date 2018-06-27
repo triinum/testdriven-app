@@ -18,7 +18,6 @@ before_script:
 
 script:
   - docker-compose run users python manage.py cov
-  - docker-compose run client npm run cov
   - docker-compose run users flake8 project
 
 after_script:
