@@ -1,5 +1,8 @@
 """ services/users/project/api/models.py """
 
+import datetime
+import jwt
+
 from project import db, bcrypt
 from flask import current_app
 
@@ -20,9 +23,26 @@ class User(db.Model):
             password, current_app.config['BCRYPT_LOG_ROUNDS']).decode()
 
     def to_json(self):
+        """public json model"""
         return {
             'id': self.id,
             'username': self.username,
             'email': self.email,
             'active': self.active
         }
+
+    def encode_auth_token(self, user_id):
+        """Generates auth token"""
+        try:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                'iat': datetime.datetime.utcnow(),
+                'sub': user_id
+            }
+            return jwt.encode(
+                payload,
+                current_app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e

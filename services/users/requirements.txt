@@ -9,3 +9,4 @@ gunicorn==19.7.1
 coverage==4.4.2
 flake8==3.5.0
 flask-debugtoolbar==0.10.1
+pyjwt==1.5.3

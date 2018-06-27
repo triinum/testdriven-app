@@ -18,7 +18,7 @@ before_script:
 
 script:
   - docker-compose run users python manage.py test
-  - docker-compose run client npm test -- --verbose
+  - docker-compose -e CI=true run client npm test -- --verbose
   - docker-compose run users flake8 project
 
 after_script:
