@@ -21,8 +21,8 @@ class TestUserService(BaseTestCase):
     def test_main_with_users(self):
         """Ensure the main route behaves correctly when some users
            have been added"""
-        add_user('ride', 'sride@nasa.gov')
-        add_user('glenn', 'jglenn@nasa.gov')
+        add_user('ride', 'sride@nasa.gov', 'spacerace')
+        add_user('glenn', 'jglenn@nasa.gov', 'spaceracer')
         with self.client:
             response = self.client.get('/')
             self.assertEqual(response.status_code, 200)
@@ -36,7 +36,11 @@ class TestUserService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/',
-                data=dict(username='shepard', email='jshepard@nasa.gov'),
+                data=dict(
+                    username='shepard',
+                    email='jshepard@nasa.gov',
+                    password='arandompassword'
+                ),
                 follow_redirects=True
             )
             self.assertEqual(response.status_code, 200)
@@ -59,7 +63,8 @@ class TestUserService(BaseTestCase):
             '/users',
             data=json.dumps({
                 'username': 'narmstrong',
-                'email': 'narmstrong@nasa.gov'
+                'email': 'narmstrong@nasa.gov',
+                'password': 'arandompassword'
             }),
             content_type='application/json'
         )
@@ -83,12 +88,46 @@ class TestUserService(BaseTestCase):
             self.assertIn('Invalid payload', data['message'])
             self.assertIn('fail', data['status'])
 
-    def test_add_user_invalid_json_keys(self):
+    def test_add_user_invalid_request_no_username(self):
         """Ensure that error is thrown if username key is missing"""
         with self.client:
             response = self.client.post(
                 '/users',
-                data=json.dumps({'email': 'baldrin@nasa.gov'}),
+                data=json.dumps({
+                    'email': 'baldrin@nasa.gov',
+                    'password': 'onestep'
+                }),
+                content_type='application/json'
+            )
+            data = json.loads(response.data.decode())
+
+            self.assertEqual(response.status_code, 400)
+            self.assertIn('Invalid payload', data['message'])
+            self.assertIn('fail', data['status'])
+
+    def test_add_user_invalid_request_no_email(self):
+        """Ensure that error is thrown if email key is missing"""
+        with self.client:
+            response = self.client.post(
+                '/users',
+                data=json.dumps({'username': 'buzz', 'password': 'onestep'}),
+                content_type='application/json'
+            )
+            data = json.loads(response.data.decode())
+
+            self.assertEqual(response.status_code, 400)
+            self.assertIn('Invalid payload', data['message'])
+            self.assertIn('fail', data['status'])
+
+    def test_add_user_invalid_request_no_password(self):
+        """Ensure that error is thrown if password key is missing"""
+        with self.client:
+            response = self.client.post(
+                '/users',
+                data=json.dumps({
+                    'email': 'baldrin@nasa.gov',
+                    'username': 'buzz'
+                }),
                 content_type='application/json'
             )
             data = json.loads(response.data.decode())
@@ -104,7 +143,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'narmstrong',
-                    'email': 'narmstrong@nasa.gov'
+                    'email': 'narmstrong@nasa.gov',
+                    'password': 'arandompassword'
                 }),
                 content_type='application/json'
             )
@@ -112,7 +152,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'narmstrong',
-                    'email': 'narmstrong@nasa.gov'
+                    'email': 'narmstrong@nasa.gov',
+                    'password': 'anotherrandompassword'
                 }),
                 content_type='application/json'
             )
@@ -124,7 +165,7 @@ class TestUserService(BaseTestCase):
 
     def test_single_user(self):
         """Ensure that you can get a single user"""
-        user = add_user('jglenn', 'jglenn@nasa.gov')
+        user = add_user('jglenn', 'jglenn@nasa.gov', 'spaceforce1')
         with self.client:
             response = self.client.get(f"/users/{user.id}")
             data = json.loads(response.data.decode())
@@ -156,8 +197,8 @@ class TestUserService(BaseTestCase):
 
     def test_all_users(self):
         """Ensure get all users behaves correctly"""
-        add_user('ride', 'sride@nasa.gov')
-        add_user('glenn', 'jglenn@nasa.gov')
+        add_user('ride', 'sride@nasa.gov', 'spacerace')
+        add_user('glenn', 'jglenn@nasa.gov', 'spaceforce')
         with self.client:
             response = self.client.get('/users')
             data = json.loads(response.data.decode())

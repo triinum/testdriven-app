@@ -14,11 +14,11 @@ COV = coverage.coverage(
     branch=True,
     include='project/*',
     omit=[
-        'project/tests/*',
-        'project/config.py'
+        'project/tests/*'
     ]
 )
 COV.start()
+
 
 @cli.command()
 def recreate_db():
@@ -27,12 +27,14 @@ def recreate_db():
     db.create_all()
     db.session.commit()
 
+
 @cli.command()
 def seed_db():
     """seed the database"""
     db.session.add(User(username='shepard', email='jshepard@nasa.gov'))
     db.session.add(User(username='glenn', email='jglenn@nasa.gov'))
     db.session.commit()
+
 
 @cli.command()
 def test():
@@ -42,6 +44,7 @@ def test():
     if result.wasSuccessful():
         return 0
     return 1
+
 
 @cli.command()
 def cov():
@@ -57,6 +60,7 @@ def cov():
         COV.erase()
         return 0
     return 1
+
 
 if __name__ == '__main__':
     cli()
