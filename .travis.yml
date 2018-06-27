@@ -17,8 +17,8 @@ before_script:
   - docker-compose up -d --build
 
 script:
-  - docker-compose run users python manage.py test
-  - docker-compose -e CI=true run client npm test -- --verbose
+  - docker-compose run users python manage.py cov
+  - docker-compose run client npm run cov
   - docker-compose run users flake8 project
 
 after_script:
