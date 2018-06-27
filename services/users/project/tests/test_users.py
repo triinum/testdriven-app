@@ -4,15 +4,7 @@ import json
 import unittest
 
 from project.tests.base import BaseTestCase
-from project import db
-from project.api.models import User
-
-
-def add_user(username, email):
-    user = User(username=username, email=email)
-    db.session.add(user)
-    db.session.commit()
-    return user
+from project.tests.utils import add_user
 
 
 class TestUserService(BaseTestCase):
@@ -134,7 +126,7 @@ class TestUserService(BaseTestCase):
         """Ensure that you can get a single user"""
         user = add_user('jglenn', 'jglenn@nasa.gov')
         with self.client:
-            response = self.client.get(f'/users/{user.id}')
+            response = self.client.get(f"/users/{user.id}")
             data = json.loads(response.data.decode())
 
             self.assertEqual(response.status_code, 200)
