@@ -31,8 +31,14 @@ def recreate_db():
 @cli.command()
 def seed_db():
     """seed the database"""
-    db.session.add(User(username='shepard', email='jshepard@nasa.gov'))
-    db.session.add(User(username='glenn', email='jglenn@nasa.gov'))
+    db.session.add(User(
+        username='shepard',
+        email='jshepard@nasa.gov',
+        password='murica'))
+    db.session.add(User(
+        username='glenn',
+        email='jglenn@nasa.gov',
+        password='usausa'))
     db.session.commit()
 
 
