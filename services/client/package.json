@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -16,6 +17,8 @@
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1"
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.0.1",
+    "eslint-plugin-react": "^7.10.0"
   }
 }
