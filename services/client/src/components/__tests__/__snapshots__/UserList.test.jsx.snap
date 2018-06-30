@@ -3,12 +3,12 @@
 exports[`UserList renders a snapshot properly 1`] = `
 <div>
   <h4
-    className="card card-body bg-light"
+    className="well"
   >
     zoey
   </h4>
   <h4
-    className="card card-body bg-light"
+    className="well"
   >
     dexter
   </h4>
