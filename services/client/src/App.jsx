@@ -8,6 +8,7 @@ import AddUser from "./components/AddUser";
 import About from "./components/About";
 import Form from "./components/Form";
 import Logout from "./components/Logout";
+import UserStatus from "./components/UserStatus";
 
 class App extends Component {
   constructor() {
@@ -32,6 +33,11 @@ class App extends Component {
   }
   componentDidMount() {
     this.getUsers();
+    if (window.localStorage.authToken) {
+      this.setState({
+        isAuthenticated: true
+      });
+    }
   }
   logoutUser() {
     window.localStorage.clear();
@@ -105,7 +111,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar title={this.state.title} />
+        <NavBar
+          title={this.state.title}
+          isAuthenticated={this.state.isAuthenticated}
+        />
         <div className="container">
           <div className="row">
             <div className="col-md-4">
@@ -145,6 +154,9 @@ class App extends Component {
                   </div>
                 )} />
                 <Route exact path='/about' render={About} />
+                <Route exact path='/status' render={() => (
+                  <UserStatus isAuthenticated={this.state.isAuthenticated} />
+                 )} />
                 <Route exact path='/logout' render={() => (
                   <Logout
                     logoutUser={this.logoutUser}
