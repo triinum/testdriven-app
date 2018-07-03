@@ -9,7 +9,7 @@ const Form = (props) => {
     <div>
       <h1>{props.formType}</h1>
       <hr /><br />
-      <form onSubmit={(event) => props.handleUserSubmit(event)}>
+      <form onSubmit={(event) => props.handleUserFormSubmit(event)}>
         {props.formType === 'Register' &&
           <div className="form-group">
             <input

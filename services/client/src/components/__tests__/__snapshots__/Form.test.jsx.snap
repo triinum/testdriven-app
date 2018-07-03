@@ -1,64 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`{el.formTyppe} Form renders a snapshot properly 1`] = `
-<div>
-  <h1>
-    Register
-  </h1>
-  <hr />
-  <br />
-  <form
-    onSubmit={[Function]}
-  >
-    <div
-      className="form-group"
-    >
-      <input
-        className="form-control input-lg"
-        name="username"
-        onChange={undefined}
-        placeholder="Username"
-        required={true}
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      className="form-group"
-    >
-      <input
-        className="form-control input-lg"
-        name="email"
-        onChange={undefined}
-        placeholder="Email"
-        required={true}
-        type="email"
-        value=""
-      />
-    </div>
-    <div
-      className="form-group"
-    >
-      <input
-        className="form-control input-lg"
-        name="password"
-        onChange={undefined}
-        placeholder="Password"
-        required={true}
-        type="password"
-        value=""
-      />
-    </div>
-    <input
-      className="btn btn-primary btn-lg btn-block"
-      type="submit"
-      value="Register"
-    />
-  </form>
-</div>
-`;
-
-exports[`{el.formTyppe} Form renders a snapshot properly 2`] = `
+exports[`When not authenticated Login Form renders a snapshot properly 1`] = `
 <div>
   <h1>
     Login
@@ -74,7 +16,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 2`] = `
       <input
         className="form-control input-lg"
         name="email"
-        onChange={undefined}
+        onChange={[Function]}
         placeholder="Email"
         required={true}
         type="email"
@@ -87,7 +29,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 2`] = `
       <input
         className="form-control input-lg"
         name="password"
-        onChange={undefined}
+        onChange={[Function]}
         placeholder="Password"
         required={true}
         type="password"
@@ -98,6 +40,64 @@ exports[`{el.formTyppe} Form renders a snapshot properly 2`] = `
       className="btn btn-primary btn-lg btn-block"
       type="submit"
       value="Login"
+    />
+  </form>
+</div>
+`;
+
+exports[`When not authenticated Register Form renders a snapshot properly 1`] = `
+<div>
+  <h1>
+    Register
+  </h1>
+  <hr />
+  <br />
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <input
+        className="form-control input-lg"
+        name="username"
+        onChange={[Function]}
+        placeholder="Username"
+        required={true}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <input
+        className="form-control input-lg"
+        name="email"
+        onChange={[Function]}
+        placeholder="Email"
+        required={true}
+        type="email"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <input
+        className="form-control input-lg"
+        name="password"
+        onChange={[Function]}
+        placeholder="Password"
+        required={true}
+        type="password"
+        value=""
+      />
+    </div>
+    <input
+      className="btn btn-primary btn-lg btn-block"
+      type="submit"
+      value="Register"
     />
   </form>
 </div>
