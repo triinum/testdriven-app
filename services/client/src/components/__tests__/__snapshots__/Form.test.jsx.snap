@@ -14,7 +14,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 1`] = `
       className="form-group"
     >
       <input
-        className="form-control input.lg"
+        className="form-control input-lg"
         name="username"
         onChange={undefined}
         placeholder="Username"
@@ -27,7 +27,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 1`] = `
       className="form-group"
     >
       <input
-        className="form-control input.lg"
+        className="form-control input-lg"
         name="email"
         onChange={undefined}
         placeholder="Email"
@@ -40,7 +40,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 1`] = `
       className="form-group"
     >
       <input
-        className="form-control input.lg"
+        className="form-control input-lg"
         name="password"
         onChange={undefined}
         placeholder="Password"
@@ -72,7 +72,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 2`] = `
       className="form-group"
     >
       <input
-        className="form-control input.lg"
+        className="form-control input-lg"
         name="email"
         onChange={undefined}
         placeholder="Email"
@@ -85,7 +85,7 @@ exports[`{el.formTyppe} Form renders a snapshot properly 2`] = `
       className="form-group"
     >
       <input
-        className="form-control input.lg"
+        className="form-control input-lg"
         name="password"
         onChange={undefined}
         placeholder="Password"
