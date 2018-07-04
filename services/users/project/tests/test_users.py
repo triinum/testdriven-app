@@ -4,7 +4,9 @@ import json
 import unittest
 
 from project.tests.base import BaseTestCase
-from project.tests.utils import add_user
+from project.tests.utils import add_user, auth_with_user
+from project import db
+from project.api.models import User
 
 
 class TestUserService(BaseTestCase):
@@ -59,6 +61,8 @@ class TestUserService(BaseTestCase):
 
     def test_add_user(self):
         """Ensure a new user can be added to the database"""
+        user = add_user('testuser', 'test@test.com', 'password')
+        auth_token = auth_with_user(self.client, user, 'password')
         response = self.client.post(
             '/users',
             data=json.dumps({
@@ -66,7 +70,8 @@ class TestUserService(BaseTestCase):
                 'email': 'narmstrong@nasa.gov',
                 'password': 'arandompassword'
             }),
-            content_type='application/json'
+            content_type='application/json',
+            headers={'Authorization': f'Bearer {auth_token}'}
         )
         data = json.loads(response.data.decode())
 
@@ -74,13 +79,41 @@ class TestUserService(BaseTestCase):
         self.assertIn('narmstrong@nasa.gov was added!', data['message'])
         self.assertIn('success', data['status'])
 
+    def test_add_user_invalid(self):
+        add_user('test', 'test@test.com', 'test')
+        # update user
+        user = User.query.filter_by(email='test@test.com').first()
+        user.active = False
+        db.session.commit()
+
+        with self.client:
+            auth_token = auth_with_user(self.client, user, 'test')
+            response = self.client.post(
+                '/users',
+                data=json.dumps({
+                    'username': 'michael',
+                    'email': 'michael@sonotreal.com',
+                    'password': 'test'
+                }),
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['message'] == 'Provide a valid auth token')
+            self.assertEqual(response.status_code, 401)
+
     def test_add_user_invalid_json(self):
         """Ensure that sending nothing to new user throws error"""
+        user = add_user('test', 'test@test.com', 'test')
+
         with self.client:
+            auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
                 data=json.dumps({}),
-                content_type='application/json'
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
             )
             data = json.loads(response.data.decode())
 
@@ -91,13 +124,16 @@ class TestUserService(BaseTestCase):
     def test_add_user_invalid_request_no_username(self):
         """Ensure that error is thrown if username key is missing"""
         with self.client:
+            user = add_user('testuser', 'test@test.com', 'test')
+            auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
                 data=json.dumps({
                     'email': 'baldrin@nasa.gov',
                     'password': 'onestep'
                 }),
-                content_type='application/json'
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
             )
             data = json.loads(response.data.decode())
 
@@ -108,10 +144,15 @@ class TestUserService(BaseTestCase):
     def test_add_user_invalid_request_no_email(self):
         """Ensure that error is thrown if email key is missing"""
         with self.client:
+            user = add_user('testuser', 'test@test.com', 'test')
+            auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
-                data=json.dumps({'username': 'buzz', 'password': 'onestep'}),
-                content_type='application/json'
+                data=json.dumps({
+                    'username': 'buzz', 
+                    'password': 'onestep'}),
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
             )
             data = json.loads(response.data.decode())
 
@@ -122,13 +163,16 @@ class TestUserService(BaseTestCase):
     def test_add_user_invalid_request_no_password(self):
         """Ensure that error is thrown if password key is missing"""
         with self.client:
+            user = add_user('testuser', 'test@test.com', 'test')
+            auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
                 data=json.dumps({
                     'email': 'baldrin@nasa.gov',
                     'username': 'buzz'
                 }),
-                content_type='application/json'
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
             )
             data = json.loads(response.data.decode())
 
@@ -139,6 +183,8 @@ class TestUserService(BaseTestCase):
     def test_add_user_duplicate_email(self):
         """Ensure an error is thrown in edge case of duplicate email"""
         with self.client:
+            user = add_user('testuser', 'test@test.com', 'test')
+            auth_token = auth_with_user(self.client, user, 'test')
             self.client.post(
                 '/users',
                 data=json.dumps({
@@ -146,7 +192,8 @@ class TestUserService(BaseTestCase):
                     'email': 'narmstrong@nasa.gov',
                     'password': 'arandompassword'
                 }),
-                content_type='application/json'
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
             )
             response = self.client.post(
                 '/users',
@@ -155,7 +202,8 @@ class TestUserService(BaseTestCase):
                     'email': 'narmstrong@nasa.gov',
                     'password': 'anotherrandompassword'
                 }),
-                content_type='application/json'
+                content_type='application/json',
+                headers={'Authorization': f'Bearer {auth_token}'}
             )
             data = json.loads(response.data.decode())
 
