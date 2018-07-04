@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Authenticated UserStatus renders a snapshot properly 1`] = `
+<p>
+  You must be logged in to view this. Click 
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    here
+  </a>
+   to log back in.
+</p>
+`;
+
+exports[`Not Authenticated UserStatus renders a snapshot properly 1`] = `
+<p>
+  You must be logged in to view this. Click 
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    here
+  </a>
+   to log back in.
+</p>
+`;

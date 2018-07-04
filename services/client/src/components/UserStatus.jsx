@@ -47,13 +47,16 @@ class UserStatus extends React.Component {
       <div>
         <ul>
           <li>
-            <strong>ID:</strong> {this.state.id}
+            <strong>ID:</strong>
+            <span className="value">{this.state.id}</span>
           </li>
           <li>
-            <strong>Username:</strong> {this.state.username}
+            <strong>Username:</strong>
+            <span className="value">{this.state.username}</span>
           </li>
           <li>
-            <strong>Email:</strong> {this.state.email}
+            <strong>Email:</strong>
+            <span className="value">{this.state.email}</span>
           </li>
         </ul>
       </div>
