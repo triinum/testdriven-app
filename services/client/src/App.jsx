@@ -4,7 +4,6 @@ import axios from "axios";
 
 import NavBar from "./components/NavBar";
 import UserList from "./components/UserList";
-import AddUser from "./components/AddUser";
 import About from "./components/About";
 import Form from "./components/Form";
 import Logout from "./components/Logout";
@@ -140,16 +139,6 @@ class App extends Component {
                 )} />
                 <Route exact path='/' render={() => (
                   <div>
-                    <h1>All Users</h1>
-                    <hr />
-                    <br />
-                    <AddUser
-                      username={this.state.username}
-                      email={this.state.email}
-                      handleChange={this.handleChange}
-                      addUser={this.addUser}
-                    />
-                    <br />
                     <UserList users={this.state.users} />
                   </div>
                 )} />

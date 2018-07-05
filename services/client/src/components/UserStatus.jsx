@@ -8,7 +8,9 @@ class UserStatus extends React.Component {
     this.state = {
       email: "",
       id: "",
-      username: ""
+      username: "",
+      active: "",
+      admin: ""
     };
   }
   componentDidMount() {
@@ -30,7 +32,9 @@ class UserStatus extends React.Component {
         this.setState({
           email: res.data.data.email,
           id: res.data.data.id,
-          username: res.data.data.username
+          username: res.data.data.username,
+          active: String(res.data.data.active),
+          admin: String(res.data.data.admin)
         });
       })
       .catch(error => {
@@ -40,8 +44,11 @@ class UserStatus extends React.Component {
   render() {
     if (!this.props.isAuthenticated) {
       return (
-        <p>You must be logged in to view this. Click <Link to="/">here</Link> to log back in.</p>
-      )
+        <p>
+          You must be logged in to view this. Click <Link to="/">here</Link> to
+          log back in.
+        </p>
+      );
     }
     return (
       <div>
@@ -57,6 +64,14 @@ class UserStatus extends React.Component {
           <li>
             <strong>Email:</strong>
             <span className="value">{this.state.email}</span>
+          </li>
+          <li>
+            <strong>Active:</strong>
+            <span className="value">{this.state.active}</span>
+          </li>
+          <li>
+            <strong>Admin:</strong>
+            <span className="value">{this.state.admin}</span>
           </li>
         </ul>
       </div>

@@ -18,9 +18,9 @@ services:
     build:
       context: ./services/client
       dockerfile: Dockerfile-prod
-    args:
-      - NODE_ENV=production
-      - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+      args:
+        - NODE_ENV=production
+        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     ports:
       - '3007:80'
     depends_on:
@@ -39,7 +39,7 @@ services:
       - APP_SETTINGS=project.config.ProductionConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - SECRET_KEY=my_precious
+      - SECRET_KEY=${SECRET_KEY}
     depends_on:
       - users-db
     links:
