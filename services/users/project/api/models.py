@@ -17,11 +17,12 @@ class User(db.Model):
     active = db.Column(db.Boolean(), default=True, nullable=False)
     admin = db.Column(db.Boolean(), default=False, nullable=False)
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, admin=False):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(
             password, current_app.config['BCRYPT_LOG_ROUNDS']).decode()
+        self.admin = admin
 
     def to_json(self):
         """public json model"""

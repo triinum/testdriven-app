@@ -61,7 +61,7 @@ class TestUserService(BaseTestCase):
 
     def test_add_user(self):
         """Ensure a new user can be added to the database"""
-        user = add_user('testuser', 'test@test.com', 'password')
+        user = add_user('testuser', 'test@test.com', 'password', True)
         auth_token = auth_with_user(self.client, user, 'password')
         response = self.client.post(
             '/users',
@@ -79,8 +79,8 @@ class TestUserService(BaseTestCase):
         self.assertIn('narmstrong@nasa.gov was added!', data['message'])
         self.assertIn('success', data['status'])
 
-    def test_add_user_invalid(self):
-        add_user('test', 'test@test.com', 'test')
+    def test_add_user_invactive_is_invalid(self):
+        add_user('test', 'test@test.com', 'test', True)
         # update user
         user = User.query.filter_by(email='test@test.com').first()
         user.active = False
@@ -105,7 +105,7 @@ class TestUserService(BaseTestCase):
 
     def test_add_user_invalid_json(self):
         """Ensure that sending nothing to new user throws error"""
-        user = add_user('test', 'test@test.com', 'test')
+        user = add_user('test', 'test@test.com', 'test', True)
 
         with self.client:
             auth_token = auth_with_user(self.client, user, 'test')
@@ -124,7 +124,7 @@ class TestUserService(BaseTestCase):
     def test_add_user_invalid_request_no_username(self):
         """Ensure that error is thrown if username key is missing"""
         with self.client:
-            user = add_user('testuser', 'test@test.com', 'test')
+            user = add_user('testuser', 'test@test.com', 'test', True)
             auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
@@ -144,7 +144,7 @@ class TestUserService(BaseTestCase):
     def test_add_user_invalid_request_no_email(self):
         """Ensure that error is thrown if email key is missing"""
         with self.client:
-            user = add_user('testuser', 'test@test.com', 'test')
+            user = add_user('testuser', 'test@test.com', 'test', True)
             auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
@@ -163,7 +163,7 @@ class TestUserService(BaseTestCase):
     def test_add_user_invalid_request_no_password(self):
         """Ensure that error is thrown if password key is missing"""
         with self.client:
-            user = add_user('testuser', 'test@test.com', 'test')
+            user = add_user('testuser', 'test@test.com', 'test', True)
             auth_token = auth_with_user(self.client, user, 'test')
             response = self.client.post(
                 '/users',
@@ -183,7 +183,7 @@ class TestUserService(BaseTestCase):
     def test_add_user_duplicate_email(self):
         """Ensure an error is thrown in edge case of duplicate email"""
         with self.client:
-            user = add_user('testuser', 'test@test.com', 'test')
+            user = add_user('testuser', 'test@test.com', 'test', True)
             auth_token = auth_with_user(self.client, user, 'test')
             self.client.post(
                 '/users',
@@ -211,9 +211,30 @@ class TestUserService(BaseTestCase):
             self.assertIn('Sorry, That email already exists.', data['message'])
             self.assertIn('fail', data['status'])
 
+    def test_add_user_not_admin(self):
+        """Add a user when not admin"""
+        user = add_user('testuser', 'test@test.com', 'password', False)
+        auth_token = auth_with_user(self.client, user, 'password')
+        response = self.client.post(
+            '/users',
+            data=json.dumps({
+                'username': 'narmstrong',
+                'email': 'narmstrong@nasa.gov',
+                'password': 'arandompassword'
+            }),
+            content_type='application/json',
+            headers={'Authorization': f'Bearer {auth_token}'}
+        )
+        data = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['status'], 'fail')
+        self.assertEqual(
+            data['message'], 'You do not have permission to do that.')
+
+
     def test_single_user(self):
         """Ensure that you can get a single user"""
-        user = add_user('jglenn', 'jglenn@nasa.gov', 'spaceforce1')
+        user = add_user('jglenn', 'jglenn@nasa.gov', 'spaceforce1', True)
         with self.client:
             response = self.client.get(f"/users/{user.id}")
             data = json.loads(response.data.decode())
