@@ -89,7 +89,7 @@ def logout_user(resp):
         'message': 'Successfully logged out.'
     }
     return jsonify(response), 200
-    
+
 
 @auth_blueprint.route('/auth/status', methods=['GET'])
 @authenticate

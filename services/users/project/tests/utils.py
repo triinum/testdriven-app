@@ -16,6 +16,7 @@ def add_user(username, email, password):
     db.session.commit()
     return user
 
+
 def auth_with_user(client, user, password):
     resp_login = client.post(
         '/auth/login',

@@ -6,6 +6,7 @@ from flask import request, jsonify
 
 from project.api.models import User
 
+
 def authenticate(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

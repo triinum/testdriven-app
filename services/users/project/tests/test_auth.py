@@ -262,12 +262,14 @@ class TestAuthBlueprint(BaseTestCase):
                 )
                 token = json.loads(resp_login.data.decode())['auth_token']
                 response = self.client.get(
-                    '/auth/status', 
+                    '/auth/status',
                     headers={'Authorization': f'Bearer {token}'}
                 )
                 data = json.loads(response.data.decode())
                 self.assertTrue(data['status'] == 'fail')
-                self.assertTrue(data['message'] == 'Provide a valid auth token')
+                self.assertEqual(
+                    data['message'],
+                    'Provide a valid auth token')
                 self.assertEqual(response.status_code, 401)
 
     def test_invalid_logout_inactive(self):
@@ -287,7 +289,7 @@ class TestAuthBlueprint(BaseTestCase):
             )
             token = json.loads(resp_login.data.decode())['auth_token']
             response = self.client.get(
-                '/auth/logout', 
+                '/auth/logout',
                 headers={'Authorization': f'Bearer {token}'}
             )
             data = json.loads(response.data.decode())

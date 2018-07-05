@@ -149,7 +149,7 @@ class TestUserService(BaseTestCase):
             response = self.client.post(
                 '/users',
                 data=json.dumps({
-                    'username': 'buzz', 
+                    'username': 'buzz',
                     'password': 'onestep'}),
                 content_type='application/json',
                 headers={'Authorization': f'Bearer {auth_token}'}
