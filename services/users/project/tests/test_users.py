@@ -234,7 +234,7 @@ class TestUserService(BaseTestCase):
 
     def test_single_user(self):
         """Ensure that you can get a single user"""
-        user = add_user('jglenn', 'jglenn@nasa.gov', 'spaceforce1', True)
+        user = add_user('jglenn', 'jglenn@nasa.gov', 'spaceforce1')
         with self.client:
             response = self.client.get(f"/users/{user.id}")
             data = json.loads(response.data.decode())
@@ -242,6 +242,8 @@ class TestUserService(BaseTestCase):
             self.assertEqual(response.status_code, 200)
             self.assertIn('jglenn', data['data']['username'])
             self.assertIn('jglenn@nasa.gov', data['data']['email'])
+            self.assertTrue(data['data']['admin'] == False)
+            self.assertTrue(data['data']['active'] == True)
             self.assertIn('success', data['status'])
 
     def test_single_user_no_id(self):
@@ -267,7 +269,7 @@ class TestUserService(BaseTestCase):
     def test_all_users(self):
         """Ensure get all users behaves correctly"""
         add_user('ride', 'sride@nasa.gov', 'spacerace')
-        add_user('glenn', 'jglenn@nasa.gov', 'spaceforce')
+        add_user('glenn', 'jglenn@nasa.gov', 'spaceforce', True)
         with self.client:
             response = self.client.get('/users')
             data = json.loads(response.data.decode())
@@ -276,9 +278,13 @@ class TestUserService(BaseTestCase):
             self.assertEqual(len(data['data']['users']), 2)
             self.assertIn('ride', data['data']['users'][0]['username'])
             self.assertIn('sride@nasa.gov', data['data']['users'][0]['email'])
+            self.assertEqual(True, data['data']['users'][0]['active'])
+            self.assertEqual(False, data['data']['users'][0]['admin'])
 
             self.assertIn('glenn', data['data']['users'][1]['username'])
             self.assertIn('jglenn@nasa.gov', data['data']['users'][1]['email'])
+            self.assertEqual(True, data['data']['users'][1]['active'])
+            self.assertEqual(True, data['data']['users'][1]['admin'])
 
             self.assertIn('success', data['status'])
 
