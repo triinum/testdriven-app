@@ -1,0 +1,13 @@
+#!/bin/bash
+
+docker pull testcafe/testcafe
+
+HOSTNAME="100.115.92.196"
+TESTS_FOLDER="`pwd`/e2e"
+export TEST_URL="http://$HOSTNAME"
+TESTCAFE_ARGS="chromium --no-sandbox -c 1 tests/**/*.js --verbose"
+
+echo "Tests Folder: $TESTS_FOLDER"
+echo "Test URL: $TEST_URL"
+
+docker run --env TEST_URL -v ${TESTS_FOLDER}:/tests -P -it testcafe/testcafe ${TESTCAFE_ARGS}
