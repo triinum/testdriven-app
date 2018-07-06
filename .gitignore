@@ -65,3 +65,6 @@ env
 
 #IDE
 .vscode
+
+#JS
+node_modules

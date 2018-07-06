@@ -1,4 +1,18 @@
+language: node_js
+node_js: '9'
+
+before_install:
+  - stty cols 80
+
+dist: trusty
 sudo: required
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 
 services:
   - docker
@@ -13,12 +27,15 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
+  - export TEST_URL=http://127.0.0.1
   - export REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/vxfb start
+  - sleep 3
   - docker-compose up -d --build
 
 script:
-  - docker-compose run users python manage.py cov
-  - docker-compose run users flake8 project
+  - bash bin/test stage
 
 after_script:
   - docker-compose down
