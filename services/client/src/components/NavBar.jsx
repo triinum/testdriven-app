@@ -20,7 +20,7 @@ const NavBar = (props) => (
         </LinkContainer>
         {props.isAuthenticated &&
           <LinkContainer to="/status">
-            <NavItem eventKey={3}>Status</NavItem>
+            <NavItem eventKey={3}>User Status</NavItem>
           </LinkContainer>
         }
       </Nav>

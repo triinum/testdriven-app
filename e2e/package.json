@@ -1,0 +1,6 @@
+{
+    "name": "testdriven-e2e",
+    "dependencies": {
+        "randomstring": "^1.1.5"
+    }
+}

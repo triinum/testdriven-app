@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-class UserStatus extends React.Component {
+class UserStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +15,7 @@ class UserStatus extends React.Component {
   }
   componentDidMount() {
     if (this.props.isAuthenticated) {
+      console.log('I\'m authenticated')
       this.getUserStatus();
     }
   }
@@ -27,6 +28,7 @@ class UserStatus extends React.Component {
         Authorization: `Bearer ${window.localStorage.authToken}`
       }
     };
+    console.log('got options', options)
     return axios(options)
       .then(res => {
         this.setState({
@@ -52,6 +54,9 @@ class UserStatus extends React.Component {
     }
     return (
       <div>
+        <h1>User Status</h1>
+        <hr/>
+        <br/>
         <ul>
           <li>
             <strong>ID:</strong>

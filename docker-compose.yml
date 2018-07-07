@@ -71,8 +71,9 @@ services:
       - TEST_URL=http://testdriven.local
       volumes:
       - ./e2e:/tests
+      - ./e2e/screenshots:/opt/screenshots
       security_opt:
       - seccomp:unconfined
       links:
       - "nginx:testdriven.local"
-      entrypoint: ["/opt/testcafe/docker/testcafe-docker.sh", "chromium", "/tests"]
+      entrypoint: ["/opt/testcafe/docker/testcafe-docker.sh", "chromium", "/tests", "-c", "3", "-S", "-s", "/opt/screenshots"]
