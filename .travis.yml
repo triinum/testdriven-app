@@ -15,8 +15,6 @@ before_install:
 before_script:
   - export REACT_APP_USERS_SERVICE_URL=http://nginx
   - docker-compose up -d --build
-  - cd e2e && npm install && cd ..
-  - mkdir -p e2e/screenshots && chmod 777 e2e/screenshots
 
 script:
   - bash bin/test stage
