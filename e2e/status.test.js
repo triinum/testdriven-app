@@ -5,6 +5,7 @@ const randomstring = require("randomstring");
 const username = randomstring.generate();
 const email = `${username}@test.com`;
 const TEST_URL = process.env.TEST_URL;
+const password = "greaterthanten";
 
 fixture("/status").page(`${TEST_URL}/status`);
 
@@ -25,7 +26,7 @@ test(`should display user info if a user is logged in`, async (t) => {
     .navigateTo(`${TEST_URL}/register`)
     .typeText('input[name="username"]', username)
     .typeText('input[name="email"]', email)
-    .typeText('input[name="password"]', 'test')
+    .typeText('input[name="password"]', password)
     .click(Selector('input[type="submit"]'))
   // assert '/status' is displayed properly
   await t
