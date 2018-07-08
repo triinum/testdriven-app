@@ -124,7 +124,7 @@ class Form extends Component {
       return <Redirect to="/" />;
     }
     let formRules = this.state.loginFormRules;
-    if (this.props.formType == "register") {
+    if (this.props.formType === "register") {
       formRules = this.state.registerFormRules;
     }
     return (

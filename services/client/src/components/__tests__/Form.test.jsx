@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow, simulate } from 'enzyme';
+import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import { MemoryRouter, Switch, Redirect } from 'react-router-dom';
 
 import Form from '../forms/Form';
 

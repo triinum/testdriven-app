@@ -77,3 +77,17 @@ services:
       links:
       - "nginx:testdriven.local"
       entrypoint: ["/opt/testcafe/docker/testcafe-docker.sh", "chromium", "/tests", "-c", "3", "-S", "-s", "/opt/screenshots"]
+
+  swagger:
+    container_name: swagger
+    build:
+      context: ./services/swagger
+      dockerfile: Dockerfile-dev
+    ports:
+    - '3008:8080'
+    volumes:
+    - './services/swagger/swagger.json:/usr/share/nginx/html/swagger.json'
+    environment:
+    - URL=swagger.json
+    depends_on:
+    - users
