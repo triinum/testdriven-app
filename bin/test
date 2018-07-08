@@ -26,15 +26,10 @@ docker-compose -f $file run --rm users python manage.py test
 inspect $? users
 docker-compose -f $file run --rm users flake8 project
 inspect $? users-lint
-if [[ "${env}" == "dev" ]]; then
-    docker-compose -f $file run --rm client npm test -- --coverage
-    inspect $? client
-    docker-compose -f $file run --rm testcafe
-    inspect $? e2e
-else
-    docker-compose -f $file run --rm testcafe
-    inspect $? e2e
-fi
+docker-compose -f $file run --rm client npm test -- --coverage
+inspect $? client
+docker-compose -f $file run --rm testcafe
+inspect $? e2e
 
 if [ -n "${fails}" ]; then
     echo "Tests failed: ${fails}"
