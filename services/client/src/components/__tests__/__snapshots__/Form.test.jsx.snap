@@ -1,9 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When not authenticated Login Form renders a snapshot properly 1`] = `
+exports[`When not authenticated login Form renders a snapshot properly 1`] = `
 <div>
-  <h1>
-    Login
+  <h1
+    style={
+      Object {
+        "textTransform": "capitalize",
+      }
+    }
+  >
+    login
   </h1>
   <hr />
   <br />
@@ -39,16 +45,22 @@ exports[`When not authenticated Login Form renders a snapshot properly 1`] = `
     <input
       className="btn btn-primary btn-lg btn-block"
       type="submit"
-      value="Login"
+      value="login"
     />
   </form>
 </div>
 `;
 
-exports[`When not authenticated Register Form renders a snapshot properly 1`] = `
+exports[`When not authenticated register Form renders a snapshot properly 1`] = `
 <div>
-  <h1>
-    Register
+  <h1
+    style={
+      Object {
+        "textTransform": "capitalize",
+      }
+    }
+  >
+    register
   </h1>
   <hr />
   <br />
@@ -97,7 +109,7 @@ exports[`When not authenticated Register Form renders a snapshot properly 1`] = 
     <input
       className="btn btn-primary btn-lg btn-block"
       type="submit"
-      value="Register"
+      value="register"
     />
   </form>
 </div>
