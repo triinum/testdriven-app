@@ -34,6 +34,12 @@ class TestingConfig(BaseConfig):
     PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 
+class StagingConfig(BaseConfig):
+    """Staging Configuration"""
+    ENV = 'staging'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+
 class ProductionConfig(BaseConfig):
     """Production Configuration"""
     ENV = 'production'
