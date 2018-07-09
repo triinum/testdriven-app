@@ -31,13 +31,14 @@ before_script:
   - export TEST_URL=http://nginx
   - export REACT_APP_USERS_SERVICE_URL=http://nginx
   - export SECRET_KEY=my_precious
-  - docker-compose up -d --build
+  - export DOCKER_ENV=$(if [ "$TRAVIS_BRANCH" == "production" ]; then echo "prod"; else echo "stage"; fi)
+  - docker-compose -f docker-compose-$DOCKER_ENV.yml up -d --build
 
 script:
-  - bash bin/test stage
+  - bash bin/test $DOCKER_ENV
 
 after_script:
-  - docker-compose down
+  - docker-compose -f docker-compose-$DOCKER_ENV.yml down
 
 after_success:
   - bash bin/docker-push
