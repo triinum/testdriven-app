@@ -19,7 +19,7 @@ services:
       context: ./services/client
       dockerfile: Dockerfile-stage
       args:
-        - NODE_ENV=production
+        - NODE_ENV=staging
         - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     ports:
       - '3007:80'
