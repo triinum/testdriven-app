@@ -28,8 +28,8 @@ docker-compose -f $file run --rm users flake8 project
 inspect $? users-lint
 docker-compose -f $file run --rm client npm test -- --coverage
 inspect $? client
-docker-compose -f $file run --rm testcafe
-inspect $? e2e
+# docker-compose -f $file run --rm testcafe
+# inspect $? e2e
 
 if [ -n "${fails}" ]; then
     echo "Tests failed: ${fails}"
