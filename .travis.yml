@@ -9,7 +9,7 @@ services:
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION: 1.18.0
+    - DOCKER_COMPOSE_VERSION=1.18.0
     - COMMIT=${TRAVIS_COMMIT::8}
     - MAIN_REPO=https://github.com/aegaas/testdriven-app.git
     - USERS=test-driven-users
@@ -32,13 +32,13 @@ before_script:
   - export REACT_APP_USERS_SERVICE_URL=http://nginx
   - export SECRET_KEY=my_precious
   - export DOCKER_ENV=$(if [ "$TRAVIS_BRANCH" == "production" ]; then echo "prod"; else echo "stage"; fi)
-  - docker-compose -f docker-compose-$DOCKER_ENV.yml up -d --build
+  - docker-compose -f docker-compose-$(DOCKER_ENV).yml up -d --build
 
 script:
   - bash bin/test $DOCKER_ENV
 
 after_script:
-  - docker-compose -f docker-compose-$DOCKER_ENV.yml down
+  - docker-compose -f docker-compose-$(DOCKER_ENV).yml down
 
 after_success:
   - bash bin/docker-push
