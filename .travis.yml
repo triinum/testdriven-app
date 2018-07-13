@@ -28,12 +28,10 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - export TEST_URL=http://nginx
-  - export REACT_APP_USERS_SERVICE_URL=http://nginx
+  - export TEST_URL=http://testdriven.local
+  - export REACT_APP_USERS_SERVICE_URL=http://testdriven.local
   - export SECRET_KEY=my_precious
   - export DOCKER_ENV=$(if [ "$TRAVIS_BRANCH" == "production" ]; then echo "prod"; else echo "stage"; fi)
-  - echo $DOCKER_ENV
-  - docker-compose -f docker-compose-$DOCKER_ENV.yml up -d --build
 
 script:
   - bash bin/test $DOCKER_ENV

@@ -23,12 +23,16 @@ inspect() {
 }
 
 docker-compose -f $file up -d --build
+docker-compose -f $file kill testcafe
 docker-compose -f $file run --rm users python manage.py test
 inspect $? users
 docker-compose -f $file run --rm users flake8 project
 inspect $? users-lint
-docker-compose -f $file run --rm client npm test -- --coverage
-inspect $? client
+
+if [[ "${env}" != "prod" ]]; then
+    docker-compose -f $file run --rm client npm test -- --coverage
+    inspect $? client
+fi
 
 # setup for e2e tests
 docker-compose -f $file run --rm users python manage.py recreate_db
@@ -36,6 +40,9 @@ docker-compose -f $file run --rm users python manage.py seed_db
 
 docker-compose -f $file run --rm testcafe
 inspect $? e2e
+
+# docker-compose -f $file run --rm testcafe
+# inspect $? e2e
 
 if [ -n "${fails}" ]; then
     echo "Tests failed: ${fails}"

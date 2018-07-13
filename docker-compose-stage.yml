@@ -60,12 +60,12 @@ services:
     image: testcafe/testcafe
     environment:
     - NODE_PATH=/opt/testcafe/node_modules:/opt
-    - TEST_URL=http://nginx
+    - TEST_URL=http://testdriven.local
     volumes:
     - ./e2e/tests:/tests
     - ./e2e/screenshots:/opt/screenshots
     links:
-    - nginx
+    - nginx:testdriven.local
     security_opt:
     - seccomp:unconfined
     entrypoint: ["/opt/testcafe/docker/testcafe-docker.sh", "chromium", "/tests", "-c", "3", "-S", "-s", "/opt/screenshots"]
