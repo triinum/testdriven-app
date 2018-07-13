@@ -1,8 +1,12 @@
-import { Selector } from 'testcafe';
+import { Selector, RequestLogger } from 'testcafe';
+import { MyRequestHook, testApi } from './utils';
 
 const TEST_URL = process.env.TEST_URL;
 
-fixture('/').page(`${TEST_URL}/`);
+const logger = RequestLogger(`${TEST_URL}/users`, { logResponseBody: true });
+
+fixture("/")
+  .page(`${TEST_URL}/`);
 
 test(`should display the page correctly if a user is not logged in`, async (t) => {
   await t

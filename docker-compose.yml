@@ -68,9 +68,9 @@ services:
       image: testcafe/testcafe
       environment:
       - NODE_PATH=/opt/testcafe/node_modules:/opt
-      - TEST_URL=http://testdriven.local
+      - TEST_URL=${TEST_URL}
       volumes:
-      - ./e2e:/tests
+      - ./e2e/tests:/tests
       - ./e2e/screenshots:/opt/screenshots
       security_opt:
       - seccomp:unconfined

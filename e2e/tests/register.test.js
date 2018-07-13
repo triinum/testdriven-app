@@ -1,5 +1,5 @@
 import { Selector } from "testcafe";
-import { RequestLogger } from 'testcafe';
+import { MyRequestHook } from "./utils";
 
 const TEST_URL = process.env.TEST_URL;
 
@@ -10,16 +10,26 @@ const email = `${username}@test.com`
 const password = "greaterthanten";
 
 fixture("/register")
-  .page(`${TEST_URL}/register`);
+  .page(`${TEST_URL}/register`)
+  .requestHooks(new MyRequestHook(/\/auth/));
 
-test(`should display the register form`, async (t) => {
-  await t.navigateTo(`${TEST_URL}/register`)
-    .expect(Selector("H1").withText("Register").exists).ok()
-    .expect(Selector('form').exists).ok()
-    .expect(Selector('input[disabled]').exists).ok()
-    .expect(Selector('.validation-list').exists).ok()
-    .expect(Selector('.validation-list > .error').nth(0).withText(
-      'Username must not be greater than 5 characters.').exists).ok()
+test(`should display the register form`, async t => {
+    await t
+    .navigateTo(`${TEST_URL}/register`)
+    .expect(Selector("H1").withText("Register").exists)
+    .ok()
+    .expect(Selector("form").exists)
+    .ok()
+    .expect(Selector("input[disabled]").exists)
+    .ok()
+    .expect(Selector(".validation-list").exists)
+    .ok()
+    .expect(
+      Selector(".validation-list > .error")
+        .nth(0)
+        .withText("Username must be greater than 5 characters.").exists
+    )
+    .ok();
 });
 
 test(`should allow a user to register`, async (t) => {

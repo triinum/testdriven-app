@@ -1,4 +1,5 @@
 import { Selector } from "testcafe";
+import { MyRequestHook } from "./utils";
 
 const randomstring = require("randomstring");
 
@@ -7,7 +8,9 @@ const email = `${username}@test.com`;
 const TEST_URL = process.env.TEST_URL;
 const password = "greaterthanten";
 
-fixture("/status").page(`${TEST_URL}/status`);
+fixture("/status")
+  .page(`${TEST_URL}/status`)
+  .requestHooks(new MyRequestHook(/\/auth/));
 
 test(`should not display user info if a user is not logged in`, async (t) => {
   await t

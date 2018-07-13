@@ -12,6 +12,7 @@ services:
     depends_on:
       - users
       - client
+      - swagger
 
   client:
     container_name: client
@@ -53,6 +54,21 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  testcafe:
+    container_name: testcafe
+    image: testcafe/testcafe
+    environment:
+    - NODE_PATH=/opt/testcafe/node_modules:/opt
+    - TEST_URL=http://nginx
+    volumes:
+    - ./e2e/tests:/tests
+    - ./e2e/screenshots:/opt/screenshots
+    links:
+    - nginx
+    security_opt:
+    - seccomp:unconfined
+    entrypoint: ["/opt/testcafe/docker/testcafe-docker.sh", "chromium", "/tests", "-c", "3", "-S", "-s", "/opt/screenshots"]
 
   swagger:
     container_name: swagger

@@ -56,7 +56,7 @@ class Form extends Component {
     axios
       .post(url, data)
       .then(res => {
-        console.log(res.data);
+        console.log(JSON.stringify(res.data));
         this.clearForm();
         this.props.loginUser(res.data.auth_token);
       })

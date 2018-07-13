@@ -1,4 +1,5 @@
 import { Selector } from "testcafe";
+import { MyRequestHook } from "./utils";
 
 const randomstring = require("randomstring");
 const username = randomstring.generate();
@@ -7,7 +8,9 @@ const password = "greaterthanten";
 
 const TEST_URL = process.env.TEST_URL;
 
-fixture("/login").page(`${TEST_URL}/login`);
+fixture("/login")
+  .page(`${TEST_URL}/login`)
+  .requestHooks(new MyRequestHook(/\/auth/));
 
 test(`should display the sign in form`, async (t) => {
   await t
@@ -20,7 +23,8 @@ test(`should display the sign in form`, async (t) => {
       'Email is required.').exists).ok()
 });
 
-test(`should allow a user to sign in`, async (t) => {
+test
+  (`should allow a user to sign in`, async (t) => {
   // register user
   await t
     .navigateTo(`${TEST_URL}/register`)
@@ -35,7 +39,7 @@ test(`should allow a user to sign in`, async (t) => {
   await t
     .navigateTo(`${TEST_URL}/login`)
     .typeText('input[name="email"]', email)
-    .typeText('input[name="password"]', 'test')
+    .typeText('input[name="password"]', password)
     .click(Selector('input[type="submit"]'))
   // assert user is redirected to '/'
   // assert '/' is displayed properly

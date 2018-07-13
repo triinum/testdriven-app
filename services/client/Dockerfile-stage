@@ -9,4 +9,6 @@ COPY package.json /usr/src/app
 RUN npm install
 #RUN npm install react-scripts@1.1.0 -g --silent
 
+ADD . .
+
 CMD ["npm", "start"]
