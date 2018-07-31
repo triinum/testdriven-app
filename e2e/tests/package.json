@@ -1,7 +1,0 @@
-{
-    "name": "testdriven-e2e",
-    "dependencies": {
-        "axios": "^0.18.0",
-        "randomstring": "^1.1.5"
-    }
-}

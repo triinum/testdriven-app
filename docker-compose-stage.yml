@@ -55,21 +55,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  testcafe:
-    container_name: testcafe
-    image: testcafe/testcafe
-    environment:
-    - NODE_PATH=/opt/testcafe/node_modules:/opt
-    - TEST_URL=http://testdriven.local
-    volumes:
-    - ./e2e/tests:/tests
-    - ./e2e/screenshots:/opt/screenshots
-    links:
-    - nginx:testdriven.local
-    security_opt:
-    - seccomp:unconfined
-    entrypoint: ["/opt/testcafe/docker/testcafe-docker.sh", "chromium", "/tests", "-c", "3", "-S", "-s", "/opt/screenshots"]
-
   swagger:
     container_name: swagger
     build:

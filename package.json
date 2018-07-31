@@ -1,0 +1,7 @@
+{
+    "name": "testdriven-aegaas",
+    "devDependencies": {
+        "cypress": "^3.0.3",
+        "randomstring": "^1.1.5"
+    }
+}

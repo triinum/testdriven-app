@@ -38,7 +38,6 @@ fi
 docker-compose -f $file run --rm users python manage.py recreate_db
 docker-compose -f $file run --rm users python manage.py seed_db
 
-docker-compose -f $file run --rm testcafe
 inspect $? e2e
 
 # docker-compose -f $file run --rm testcafe

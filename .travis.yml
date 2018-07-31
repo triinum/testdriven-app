@@ -34,7 +34,7 @@ before_script:
   - export DOCKER_ENV=$(if [ "$TRAVIS_BRANCH" == "production" ]; then echo "prod"; else echo "stage"; fi)
 
 script:
-  - bash bin/test $DOCKER_ENV
+  - bash bin/test-ci $DOCKER_ENV
 
 after_script:
   - docker-compose -f docker-compose-$(DOCKER_ENV).yml down

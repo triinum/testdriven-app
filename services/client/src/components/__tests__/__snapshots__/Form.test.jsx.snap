@@ -1,15 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When not authenticated login Form renders a snapshot properly 1`] = `
+exports[`When not authenticated Login Form renders a snapshot properly 1`] = `
 <div>
   <h1
-    style={
-      Object {
-        "textTransform": "capitalize",
-      }
-    }
+    className="title is-1"
   >
-    login
+    Login
   </h1>
   <hr />
   <br />
@@ -33,10 +29,10 @@ exports[`When not authenticated login Form renders a snapshot properly 1`] = `
     onSubmit={[Function]}
   >
     <div
-      className="form-group"
+      className="field"
     >
       <input
-        className="form-control input-lg"
+        className="input is-medium"
         name="email"
         onChange={[Function]}
         placeholder="Email"
@@ -46,10 +42,10 @@ exports[`When not authenticated login Form renders a snapshot properly 1`] = `
       />
     </div>
     <div
-      className="form-group"
+      className="field"
     >
       <input
-        className="form-control input-lg"
+        className="input is-medium"
         name="password"
         onChange={[Function]}
         placeholder="Password"
@@ -59,25 +55,21 @@ exports[`When not authenticated login Form renders a snapshot properly 1`] = `
       />
     </div>
     <input
-      className="btn btn-primary btn-lg btn-block"
+      className="button is-primary is-medium is-fullwidth"
       disabled={true}
       type="submit"
-      value="login"
+      value="Login"
     />
   </form>
 </div>
 `;
 
-exports[`When not authenticated register Form renders a snapshot properly 1`] = `
+exports[`When not authenticated Register Form renders a snapshot properly 1`] = `
 <div>
   <h1
-    style={
-      Object {
-        "textTransform": "capitalize",
-      }
-    }
+    className="title is-1"
   >
-    register
+    Register
   </h1>
   <hr />
   <br />
@@ -111,10 +103,10 @@ exports[`When not authenticated register Form renders a snapshot properly 1`] = 
     onSubmit={[Function]}
   >
     <div
-      className="form-group"
+      className="field"
     >
       <input
-        className="form-control input-lg"
+        className="input is-medium"
         name="username"
         onChange={[Function]}
         placeholder="Username"
@@ -124,10 +116,10 @@ exports[`When not authenticated register Form renders a snapshot properly 1`] = 
       />
     </div>
     <div
-      className="form-group"
+      className="field"
     >
       <input
-        className="form-control input-lg"
+        className="input is-medium"
         name="email"
         onChange={[Function]}
         placeholder="Email"
@@ -137,10 +129,10 @@ exports[`When not authenticated register Form renders a snapshot properly 1`] = 
       />
     </div>
     <div
-      className="form-group"
+      className="field"
     >
       <input
-        className="form-control input-lg"
+        className="input is-medium"
         name="password"
         onChange={[Function]}
         placeholder="Password"
@@ -150,10 +142,10 @@ exports[`When not authenticated register Form renders a snapshot properly 1`] = 
       />
     </div>
     <input
-      className="btn btn-primary btn-lg btn-block"
+      className="button is-primary is-medium is-fullwidth"
       disabled={true}
       type="submit"
-      value="register"
+      value="Register"
     />
   </form>
 </div>

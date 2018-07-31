@@ -49,19 +49,23 @@ class Form extends Component {
       password: this.state.formData.password
     };
     console.log(formType);
-    if (formType === "register") {
+    if (formType === "Register") {
       data.username = this.state.formData.username;
     }
-    const url = `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/${formType}`;
+    const url = `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/${formType.toLowerCase()}`;
     axios
       .post(url, data)
       .then(res => {
-        console.log(JSON.stringify(res.data));
         this.clearForm();
         this.props.loginUser(res.data.auth_token);
       })
       .catch(err => {
-        console.log(err);
+        if (formType === "Login") {
+          this.props.createMessage("User does not exist.", "danger");
+        }
+        if (formType === "Register") {
+          this.props.createMessage("That user already exists.", "danger");
+        }
       });
   }
   validateForm() {
@@ -69,7 +73,7 @@ class Form extends Component {
     const formData = this.state.formData;
     self.resetRules();
     // validate register form
-    if (self.props.formType === "register") {
+    if (self.props.formType === "Register") {
       const formRules = self.state.registerFormRules;
       if (formData.username.length > 5) formRules[0].valid = true;
       if (formData.email.length > 5) formRules[1].valid = true;
@@ -79,7 +83,7 @@ class Form extends Component {
       if (self.allTrue()) self.setState({ valid: true });
     }
     // validate login form
-    if (self.props.formType === "login") {
+    if (self.props.formType === "Login") {
       const formRules = self.state.loginFormRules;
       if (formData.email.length > 0) formRules[0].valid = true;
       if (formData.password.length > 0) formRules[1].valid = true;
@@ -94,7 +98,7 @@ class Form extends Component {
   }
   allTrue() {
     let formRules = registerFormRules;
-    if (this.props.formType === "login") {
+    if (this.props.formType === "Login") {
       formRules = loginFormRules;
     }
     for (const rule of formRules) {
@@ -103,14 +107,14 @@ class Form extends Component {
     return true;
   }
   resetRules() {
-    if (this.props.formType === "login") {
+    if (this.props.formType === "Login") {
       const formRules = this.state.loginFormRules;
       for (const rule of formRules) {
         rule.valid = false;
       }
       this.setState({ loginFormRules: formRules });
     }
-    if (this.props.formType === "register") {
+    if (this.props.formType === "Register") {
       const formRules = this.state.registerFormRules;
       for (const rule of formRules) {
         rule.valid = false;
@@ -124,21 +128,21 @@ class Form extends Component {
       return <Redirect to="/" />;
     }
     let formRules = this.state.loginFormRules;
-    if (this.props.formType === "register") {
+    if (this.props.formType === "Register") {
       formRules = this.state.registerFormRules;
     }
     return (
       <div>
-        <h1 style={{ textTransform: "capitalize" }}>{this.props.formType}</h1>
+        <h1 className="title is-1">{this.props.formType}</h1>
         <hr />
         <br />
         <FormErrors formType={this.props.formType} formRules={formRules} />
         <form onSubmit={event => this.handleUserFormSubmit(event)}>
-          {this.props.formType === "register" && (
-            <div className="form-group">
+          {this.props.formType === "Register" && (
+            <div className="field">
               <input
                 name="username"
-                className="form-control input-lg"
+                className="input is-medium"
                 type="text"
                 placeholder="Username"
                 required
@@ -147,10 +151,10 @@ class Form extends Component {
               />
             </div>
           )}
-          <div className="form-group">
+          <div className="field">
             <input
               name="email"
-              className="form-control input-lg"
+              className="input is-medium"
               type="email"
               placeholder="Email"
               required
@@ -158,10 +162,10 @@ class Form extends Component {
               onChange={this.handleFormChange}
             />
           </div>
-          <div className="form-group">
+          <div className="field">
             <input
               name="password"
-              className="form-control input-lg"
+              className="input is-medium"
               type="password"
               placeholder="Password"
               required
@@ -171,7 +175,7 @@ class Form extends Component {
           </div>
           <input
             type="submit"
-            className="btn btn-primary btn-lg btn-block"
+            className="button is-primary is-medium is-fullwidth"
             value={this.props.formType}
             disabled={!this.state.valid}
           />

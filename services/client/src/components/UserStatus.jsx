@@ -15,7 +15,6 @@ class UserStatus extends Component {
   }
   componentDidMount() {
     if (this.props.isAuthenticated) {
-      console.log('I\'m authenticated')
       this.getUserStatus();
     }
   }
@@ -28,7 +27,6 @@ class UserStatus extends Component {
         Authorization: `Bearer ${window.localStorage.authToken}`
       }
     };
-    console.log('got options', options)
     return axios(options)
       .then(res => {
         this.setState({
@@ -54,12 +52,12 @@ class UserStatus extends Component {
     }
     return (
       <div>
-        <h1>User Status</h1>
+        <h1 className="title is-1">User Status</h1>
         <hr/>
         <br/>
         <ul>
           <li>
-            <strong>ID:</strong>
+            <strong>User ID:</strong>
             <span className="value">{this.state.id}</span>
           </li>
           <li>

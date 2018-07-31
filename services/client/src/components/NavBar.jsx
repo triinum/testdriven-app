@@ -1,49 +1,45 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from "react-router-dom";
 
 const NavBar = (props) => (
-  <Navbar inverse collapseOnSelect>
-    <Navbar.Header>
-      <Navbar.Brand>
-        <span>{props.title}</span>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-    </Navbar.Header>
-    <Navbar.Collapse>
-      <Nav>
-        <LinkContainer to="/">
-          <NavItem eventKey={1}>Home</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/about">
-          <NavItem eventKey={2}>About</NavItem>
-        </LinkContainer>
-        {props.isAuthenticated &&
-          <LinkContainer to="/status">
-            <NavItem eventKey={3}>User Status</NavItem>
-          </LinkContainer>
-        }
-      </Nav>
-      <Nav pullRight>
-        {!props.isAuthenticated &&
-          <LinkContainer to="/register">
-            <NavItem eventKey={1}>Register</NavItem>
-          </LinkContainer>
-        }
-        {!props.isAuthenticated &&
-
-          <LinkContainer to="/login">
-            <NavItem eventKey={2}>Log In</NavItem>
-          </LinkContainer>
-        }
-        {props.isAuthenticated &&
-          <LinkContainer to="/logout">
-            <NavItem eventKey={3}>Log Out</NavItem>
-          </LinkContainer>
-        }
-      </Nav>
-    </Navbar.Collapse>
-  </Navbar>
-);
-
+  // eslint-disable-next-line
+  <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
+    <section className="container">
+      <div className="navbar-brand">
+        <strong className="navbar-item">{props.title}</strong>
+        <span
+          className="nav-toggle navbar-burger"
+          onClick={() => {
+            let toggle = document.querySelector(".nav-toggle");
+            let menu = document.querySelector(".navbar-menu");
+            toggle.classList.toggle("is-active"); menu.classList.toggle("is-active"
+            );
+          }}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
+      <div className="navbar-menu">
+        <div className="navbar-start">
+          <Link to="/" className="navbar-item">Home</Link>
+          <Link to="/about" className="navbar-item">About</Link>
+          {props.isAuthenticated &&
+            <Link to="/status" className="navbar-item">User Status</Link>
+          }        </div>
+        <div className="navbar-end">
+          {!props.isAuthenticated &&
+            <Link to="/register" className="navbar-item">Register</Link>
+          }
+          {!props.isAuthenticated &&
+            <Link to="/login" className="navbar-item">Log In</Link>
+          }
+          {props.isAuthenticated &&
+            <Link to="/logout" className="navbar-item">Log Out</Link>
+          }
+        </div>
+      </div>
+    </section>
+  </nav>
+)
 export default NavBar;

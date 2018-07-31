@@ -2,107 +2,71 @@
 
 exports[`NavBar renders a snapshot properly 1`] = `
 <nav
-  className="navbar navbar-inverse"
+  aria-label="main navigation"
+  className="navbar is-dark"
+  role="navigation"
 >
-  <div
+  <section
     className="container"
   >
     <div
-      className="navbar-header"
+      className="navbar-brand"
     >
-      <span
-        className="navbar-brand"
+      <strong
+        className="navbar-item"
       >
         Hello, World!
-      </span>
-      <button
-        className="navbar-toggle collapsed"
+      </strong>
+      <span
+        className="nav-toggle navbar-burger"
         onClick={[Function]}
-        type="button"
       >
-        <span
-          className="sr-only"
-        >
-          Toggle navigation
-        </span>
-        <span
-          className="icon-bar"
-        />
-        <span
-          className="icon-bar"
-        />
-        <span
-          className="icon-bar"
-        />
-      </button>
+        <span />
+        <span />
+        <span />
+      </span>
     </div>
     <div
-      aria-expanded={null}
-      className="navbar-collapse collapse"
+      className="navbar-menu"
     >
-      <ul
-        className="nav navbar-nav"
-        role={null}
+      <div
+        className="navbar-start"
       >
-        <li
-          className="active"
-          role="presentation"
-          style={Object {}}
+        <a
+          className="navbar-item"
+          href="/"
+          onClick={[Function]}
         >
-          <a
-            href="/"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-          >
-            Home
-          </a>
-        </li>
-        <li
-          className=""
-          role="presentation"
-          style={undefined}
+          Home
+        </a>
+        <a
+          className="navbar-item"
+          href="/about"
+          onClick={[Function]}
         >
-          <a
-            href="/about"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-          >
-            About
-          </a>
-        </li>
-      </ul>
-      <ul
-        className="nav navbar-nav navbar-right"
-        role={null}
+          About
+        </a>
+                
+      </div>
+      <div
+        className="navbar-end"
       >
-        <li
-          className=""
-          role="presentation"
-          style={undefined}
+        <a
+          className="navbar-item"
+          href="/register"
+          onClick={[Function]}
         >
-          <a
-            href="/register"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-          >
-            Register
-          </a>
-        </li>
-        <li
-          className=""
-          role="presentation"
-          style={undefined}
+          Register
+        </a>
+        <a
+          className="navbar-item"
+          href="/login"
+          onClick={[Function]}
         >
-          <a
-            href="/login"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-          >
-            Log In
-          </a>
-        </li>
-      </ul>
+          Log In
+        </a>
+      </div>
     </div>
-  </div>
+  </section>
 </nav>
 `;

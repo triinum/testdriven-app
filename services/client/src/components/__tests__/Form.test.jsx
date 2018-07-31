@@ -6,7 +6,7 @@ import Form from '../forms/Form';
 
 const testData = [
   {
-    formType: 'register',
+    formType: 'Register',
     formData: {
       username: '',
       email: '',
@@ -16,7 +16,7 @@ const testData = [
     loginUser: jest.fn()
   },
   {
-    formType: 'login',
+    formType: 'Login',
     formData: {
       email: '',
       password: ''
@@ -35,7 +35,7 @@ describe('When not authenticated', () => {
       expect(h1.length).toBe(1);
       expect(h1.get(0).props.children).toBe(el.formType);
 
-      const formGroup = wrapper.find('.form-group')
+      const formGroup = wrapper.find('.field')
       expect(formGroup.length).toBe(Object.keys(el.formData).length);
 
       // fields
@@ -47,7 +47,7 @@ describe('When not authenticated', () => {
       }
 
       // submit
-      const submit = wrapper.find('input.btn');
+      const submit = wrapper.find('input.button');
       expect(submit.length).toBe(1);
       expect(submit.get(0).props.value).toBe(el.formType);
     });
