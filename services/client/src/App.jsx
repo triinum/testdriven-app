@@ -9,6 +9,7 @@ import Form from "./components/forms/Form";
 import Logout from "./components/Logout";
 import UserStatus from "./components/UserStatus";
 import Message from "./components/Message";
+import Footer from "./components/Footer";
 
 class App extends Component {
   constructor() {
@@ -117,9 +118,10 @@ class App extends Component {
                     />
                   )} />
                   <Route exact path='/' render={() => (
-                    <div>
-                      <UserList users={this.state.users} />
-                    </div>
+                    <p>Something.</p>
+                  )} />
+                  <Route exact path='/all-users' render={() => (
+                    <UserList users={this.state.users} />
                   )} />
                   <Route exact path='/about' render={About} />
                   <Route exact path='/status' render={() => (
@@ -136,6 +138,7 @@ class App extends Component {
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     );
   }
