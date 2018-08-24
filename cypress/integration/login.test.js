@@ -43,7 +43,7 @@ describe('Login', () => {
     // assert user is redirected to '/'
     // assert '/' is displayed properly
     cy.get('.navbar-burger').click();
-    cy.contains('All Users');
+    cy.contains('All Users').click();
     cy
       .get('table')
       .find('tbody > tr').last()

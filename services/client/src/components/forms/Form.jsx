@@ -125,7 +125,7 @@ class Form extends Component {
   }
   render() {
     if (this.props.isAuthenticated) {
-      return <Redirect to="/" />;
+      return <Redirect to="/all-users" />;
     }
     let formRules = this.state.loginFormRules;
     if (this.props.formType === "Register") {

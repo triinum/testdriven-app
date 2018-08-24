@@ -4,7 +4,7 @@ describe('Index', () => {
 
     cy
       .visit('/')
-      .get('h1').contains('All Users')
+      .get('p').contains('Something.')
       .get('.navbar-burger').click()
       .get('a').contains('User Status').should('not.be.visible')
       .get('a').contains('Log Out').should('not.be.visible')
